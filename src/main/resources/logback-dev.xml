@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">	
+	<!-- https://aljjabaegi.tistory.com/413 -->
+	<!-- https://jeong-pro.tistory.com/154 -->
+	<!-- TRACE > DEBUG > INFO > WARN > ERROR  -->
+
+	<property name="LOG_PATH_NAME"	value="/app/logs" />
+	<property name="FILE_NAME"		value="dev" />
+	
+	<!-- <property name="LOG_PATH_NAME"	value="${LOG_DIR}" />  -->
+	<!-- <property name="LOG_DIR"		value="/app/logs" />   -->
+	
+	<!-- 기본 Logging -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLINGFILE" />  
+	</root>
+	
+	<!-- 특정 Package 만 Logging  
+	<logger name="com.mw.csp.nateonbiz" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLINGFILE" />
+	</logger>
+	-->
+
+	<!-- STDOUT Appender -->
+	<!-- 모든 Logg를 STDOUT으로 출력 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+        	<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+        	<!-- <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c{1}] [%F:%L] [%m] %n</pattern>   -->
+        	<!-- <pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</pattern> -->
+        	<!-- <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern> -->
+        	<!-- [2018-08-17] [15:24:21.355] [log level] [logName] [class.java line] [message] -->
+		</encoder>
+    </appender>
+
+	<!-- FILE Rolling Appender -->
+	<!-- 일자별 로그파일 저장 (30일) -->
+	<!-- 1 Day 이내여도 100 MB 넘으면 롤링 or whenever the file size reaches 100MB ( kb, mb, gb )  -->
+	<!-- Filter에서 INFO 이상의 Log만 File로 쓰도록 추가 Logging -->
+	<appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+		<file>${LOG_PATH_NAME}/${FILE_NAME}.log</file>		
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH_NAME}/${FILE_NAME}_%d{yyyyMMdd}.%i.log</fileNamePattern>						
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">				
+				<maxFileSize>100MB</maxFileSize>                
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+		</encoder>
+	</appender>
+
+</configuration>
