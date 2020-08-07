@@ -4,29 +4,16 @@
 	<!-- https://jeong-pro.tistory.com/154 -->
 	<!-- TRACE > DEBUG > INFO > WARN > ERROR  -->
 
-	<property name="LOG_PATH_NAME"	value="/app/logs" />
-	<property name="FILE_NAME"		value="dev" />
+	<property name="LOG_PATH_NAME"	value="${logging.file.path}"/>
+	<property name="FILE_NAME"		value="${spring.profiles.active}" />
 	
 	<!-- <property name="LOG_PATH_NAME"	value="${LOG_DIR}" />  -->
 	<!-- <property name="LOG_DIR"		value="/app/logs" />   -->
 	
-	<!-- 기본 Logging -->
-	<root level="INFO">
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="ROLLINGFILE" />  
-	</root>
-	
-	<!-- 특정 Package 만 Logging  
-	<logger name="com.mw.csp.nateonbiz" level="DEBUG">
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="ROLLINGFILE" />
-	</logger>
-	-->
-
 	<!-- STDOUT Appender -->
 	<!-- 모든 Logg를 STDOUT으로 출력 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
         	<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
         	<!-- <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%c{1}] [%F:%L] [%m] %n</pattern>   -->
         	<!-- <pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</pattern> -->
@@ -55,5 +42,17 @@
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\(%L\) : %m%n</pattern>
 		</encoder>
 	</appender>
+	
+	<!-- 기본 Logging -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+	<!-- 특정 Package 만 Logging  
+	<logger name="com.mw.session.contoller" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLINGFILE" />
+	</logger>
+	-->
 
 </configuration>
