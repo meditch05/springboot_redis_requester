@@ -17,6 +17,7 @@
 #Gradle temporary files 
 target/ 
 bin/
+log/
 
 #Eclipse files 
 **/.project 

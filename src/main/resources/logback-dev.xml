@@ -4,8 +4,9 @@
 	<!-- https://jeong-pro.tistory.com/154 -->
 	<!-- TRACE > DEBUG > INFO > WARN > ERROR  -->
 
-	<property name="LOG_PATH_NAME"	value="${logging.file.path}"/>
-	<property name="FILE_NAME"		value="${spring.profiles.active}" />
+	<property resource="application.properties" />
+	<property name="LOG_PATH"	value="./log"/>
+	<property name="LOG_FILE"	value="${spring.profiles.active}" />
 	
 	<!-- <property name="LOG_PATH_NAME"	value="${LOG_DIR}" />  -->
 	<!-- <property name="LOG_DIR"		value="/app/logs" />   -->
@@ -30,7 +31,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-		<file>${LOG_PATH_NAME}/${FILE_NAME}.log</file>		
+		<file>${LOG_PATH}/${LOG_FILE}.log</file>		
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${LOG_PATH_NAME}/${FILE_NAME}_%d{yyyyMMdd}.%i.log</fileNamePattern>						
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">				
