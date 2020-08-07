@@ -46,6 +46,7 @@
 	<!-- 기본 Logging -->
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ROLLINGFILE" />
 	</root>
 	
 	<!-- 특정 Package 만 Logging  
